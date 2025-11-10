@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
-from.models import Settings
+from .models import Settings
 CONFIG = lambda: Settings.objects.first()
 
 from .taps import forecast

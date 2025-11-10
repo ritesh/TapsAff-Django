@@ -94,19 +94,27 @@ WSGI_APPLICATION = "tapsaff.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {"default": env.db()}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'testdb', # This is where you put the name of the db file. 
+                 # If one doesn't exist, it will be created at migration time.
+    }
+}
 
 # Cache
-# http://equallytrue.blogspot.co.uk/2012/04/how-to-cache-outgoing-api-calls-in.html
-
-CACHES = {"default": eval(env("CACHE", cast=str))}  # Must do better
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/var/tmp/django_cache",
+    }
+}
 
 
 # Session
-# https://docs.djangoproject.com/en/2.0/topics/http/sessions/
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
-
+SESSION_COOKIE_HTTPONLY = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -131,19 +139,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "Europe/London"
-
 USE_I18N = True
-
 USE_L10N = False
-
 DATETIME_INPUT_FORMATS = [
     "%Y-%m-%d %H:%M",  # '2006-10-25 14:30'
 ]
 
 public_root = root.path("/")
-
 STATIC_URL = "/static/"
 
 # Static files (CSS, JavaScript, Images)
